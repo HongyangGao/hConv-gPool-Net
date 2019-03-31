@@ -30,36 +30,6 @@ def gather_idx(outs, indices, k, scope):
     return outs
 
 
-def top_k_features(adj_m, fea_m, k, scope):
-    # BNN, BNC, k
-    adj_m = tf.expand_dims(adj_m, axis=2, name=scope+'/expand1')
-    fea_m = tf.expand_dims(fea_m, axis=-1, name=scope+'/expand2')
-    feas = tf.multiply(adj_m, fea_m, name=scope+'/mul')
-    feas = tf.transpose(feas, perm=[0, 3, 2, 1], name=scope+'/trans1')
-    top_k = tf.nn.top_k(feas, k=k, name=scope+'/top_k').values
-    # pre, post = tf.split(top_k, 2, axis=2, name=scope+'/split')
-    top_k = tf.concat([fea_m, top_k], axis=3, name=scope+'/concat')
-    top_k = tf.transpose(top_k, perm=[0, 1, 3, 2], name=scope+'/trans2')
-    return top_k
-
-
-def graph_conv(adj_m, outs, num_out, rate, scope, k=5, act_fn=tf.nn.relu):
-    # BNN, BNC, D
-    num_in = outs.shape[-1].value
-    adj_m = dropout(adj_m, rate, scope+'/drop1')
-    # BNKC
-    outs = top_k_features(adj_m, outs, k, scope+'/top_k')
-    outs = dropout(outs, rate, scope+'/drop1')
-    outs = conv2d(
-        outs, (num_in+num_out)//2, (k+1)//2+1, scope+'/conv1', act_fn)
-    outs = dropout(outs, rate, scope+'/drop2')
-    outs = conv2d(outs, num_out, k//2+1, scope+'/conv2', None, False)
-    # BN1D -> BND
-    outs = tf.squeeze(outs, axis=[2], name=scope+'/squeeze')
-    # outs = batch_norm(outs, scope+'/norm2')
-    return act_fn(outs) if act_fn else outs
-
-
 def simple_conv(adj_m, outs, num_out, rate, scope, k=1, act_fn=tf.nn.relu6):
     # adj_m = dropout(adj_m, rate, scope+'/drop1')
     outs = dropout(outs, rate, scope+'/drop2')
@@ -77,14 +47,6 @@ def flat(outs, scope):
 def conv1d(outs, num_out, k, scope, act_fn, bias=True, pad='same'):
     outs = tf.layers.conv1d(
         outs, num_out, k, activation=act_fn, name=scope+'/conv',
-        padding=pad, use_bias=bias,
-        kernel_initializer=tf.contrib.layers.xavier_initializer())
-    return outs
-
-
-def conv2d(outs, num_out, k, scope, act_fn, bias=False, pad='valid'):
-    outs = tf.layers.conv2d(
-        outs, num_out, (1, k), activation=act_fn, name=scope+'/conv',
         padding=pad, use_bias=bias,
         kernel_initializer=tf.contrib.layers.xavier_initializer())
     return outs
