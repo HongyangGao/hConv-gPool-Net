@@ -22,6 +22,14 @@ Detailed information about hConv-gPool-Net is provided in https://arxiv.org/abs/
 }
 ```
 
+## Data
+
+Since some files are quite large, we use LFS to deal with them. After cloning, please run
+
+`"git lfs pull`"
+
+to pull large data. You may need to install git LFS.
+
 ## Results
 
 Results of text classification experiments in terms of classification error rate on the AG’s News, DBPedia, and Yelp Review
