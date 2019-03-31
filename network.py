@@ -24,6 +24,6 @@ class DenseNet(object):
             outs = tf.reduce_max(outs, axis=1, name='max_pool_%s' % i)
             axis_outs.append(outs)
         outs = tf.concat(axis_outs, axis=1)
-        outs = ops.dense(outs, 1024, 'dense1')
-        outs = ops.dense(outs, self.conf.class_num, 'dense2')
+        outs = ops.dense(outs, 1024, self.conf.rate, 'dense1')
+        outs = ops.dense(outs, self.conf.class_num, self.conf.rate, 'dense2')
         return outs
