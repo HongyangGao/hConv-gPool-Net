@@ -53,10 +53,13 @@ def conv1d(outs, num_out, k, scope, act_fn, bias=True, pad='same'):
 
 
 def dense(outs, dim, rate, scope, act_fn=None):
-    outs = dropout(outs, rate, scope+'/drop2')
-    outs = tf.layers.dense(
-        outs, dim, activation=act_fn, name=scope+'/dense',
-        kernel_initializer=tf.contrib.layers.xavier_initializer())
+    outs = dropout(outs, rate, scope+'/drop')
+    outs = tf.contrib.layers.fully_connected(
+        outs, dim, activation_fn=act_fn, scope=scope+'/dense',
+        weights_initializer=tf.contrib.layers.xavier_initializer())
+    # outs = tf.layers.dense(
+    #     outs, dim, activation=act_fn, name=scope+'/dense',
+    #     kernel_initializer=tf.contrib.layers.xavier_initializer())
     return outs
 
 

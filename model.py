@@ -36,7 +36,7 @@ class Model(tp.ModelDesc):
             name='train_error')
         tp.summary.add_moving_summary(wrong)
         wd_cost = tf.multiply(
-            1e-4, tp.regularize_cost('.*/kernel', tf.nn.l2_loss),
+            1e-4, tp.regularize_cost('.*/weights', tf.nn.l2_loss),
             name='wd_cost')
         tp.summary.add_moving_summary(cost, wd_cost)
         tp.summary.add_param_summary(('.*/kernel', ['histogram']))
