@@ -24,13 +24,14 @@ Detailed information about hConv-gPool-Net is provided in https://arxiv.org/abs/
 
 ## Results
 
-| Models        | AG's News | DBPedia | Yelp Polarity
-Word-level CNN  | 8.55\%    | 1.37\%  | 4.60\% 
-Char-level CNN  | 9.51\%    | 1.55\%  | 4.88\% 
-GCN-Net         | 8.64\%    | 1.69\%  | 7.74\% 
-GCN-gPool-Net   | 8.09\%    | 1.44\%  | 5.82\% 
-hConv-Net       | 7.49\%    | 1.02\%  | 4.45\% 
-hConv-gPool-Net | 7.09\%    | 0.92\%  | 4.37\% 
+| Models          | AG's News | DBPedia | Yelp Polarity
+|-----------------|-----------|---------|--------------|
+| Word-level CNN  | 8.55\%    | 1.37\%  | 4.60\% 
+| Char-level CNN  | 9.51\%    | 1.55\%  | 4.88\% 
+| GCN-Net         | 8.64\%    | 1.69\%  | 7.74\% 
+| GCN-gPool-Net   | 8.09\%    | 1.44\%  | 5.82\% 
+| hConv-Net       | 7.49\%    | 1.02\%  | 4.45\% 
+| hConv-gPool-Net | 7.09\%    | 0.92\%  | 4.37\% 
 
 ## Configure the network
 
