@@ -19,8 +19,8 @@ def configure():
     flags.DEFINE_integer('nF', 300, 'feature number of nodes in graph')
     flags.DEFINE_integer('class_num', 4, 'output class number')
     # Debug
-    flags.DEFINE_string('log_dir', './logdir', 'Log dir')
-    flags.DEFINE_string('load_step', '', 'Reload step to continue training')
+    flags.DEFINE_string('logdir', './logdir', 'Log dir')
+    flags.DEFINE_string('reload_step', '', 'Reload step to continue training')
     flags.DEFINE_string('test_step', '', 'Test or predict model at this step')
     # network architecture
     flags.DEFINE_integer('ch_num', 256, 'channel num')

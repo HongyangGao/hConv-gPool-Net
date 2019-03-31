@@ -12,7 +12,7 @@ class Trainer(object):
         self.Net = Net
 
     def get_config(self):
-        tp.logger.set_logger_dir(self.conf.log_dir, 'd')
+        tp.logger.set_logger_dir(self.conf.logdir)
         vocab = voc_util.get_vocab(self.conf.vob_dict_path)
         dataset_train = get_data(
             self.conf.data_dir, self.conf.batch,
@@ -44,7 +44,9 @@ class Trainer(object):
 
     def train(self):
         config = self.get_config()
-        if self.conf.load_step:
-            config.session_init = tp.SaverRestore(self.conf.load_step)
+        if self.conf.reload_step:
+            config.session_init = tp.get_model_loader(
+                self.conf.logdir+'/'+self.conf.reload_step)
         gpus = list(map(int, os.environ['CUDA_VISIBLE_DEVICES'].split(',')))
-        tp.launch_train_with_config(config, tp.SyncMultiGPUTrainer(gpus))
+        trainer = tp.SyncMultiGPUTrainerParameterServer(gpus)
+        tp.launch_train_with_config(config, trainer)

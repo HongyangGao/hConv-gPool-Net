@@ -8,7 +8,7 @@ def graph_pool(adj_m, outs, kernel, scope):
         scores = conv1d(outs, 1, 1, 'scores', None, False)
         scores = tf.abs(scores, 'abs')
         scores = tf.squeeze(scores, axis=2, name='squeeze')
-        scores = tf.nn.sigmoid(scores, axis=1, name='softmax')
+        scores = tf.sigmoid(scores, name='sigmoid')
         values, indices = tf.nn.top_k(scores, k, name='top_k')
         # get new outs
         outs = gather_idx(outs, indices, k, 'gather1')
