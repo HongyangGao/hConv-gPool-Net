@@ -24,6 +24,9 @@ Detailed information about hConv-gPool-Net is provided in https://arxiv.org/abs/
 
 ## Results
 
+Results of text classification experiments in terms of classification error rate on the AG’s News, DBPedia, and Yelp Review
+Polarity datasets. The first two methods are the state-of-the-art models without using any unsupervised data. The last four networks are proposed in this work.
+
 | Models          | AG's News | DBPedia | Yelp Polarity
 |-----------------|-----------|---------|--------------|
 | Word-level CNN  | 8.55\%    | 1.37\%  | 4.60\% 
